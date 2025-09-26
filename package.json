@@ -1,0 +1,33 @@
+{
+  "name": "cypress-ts-framework",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+   "test:all": "rm -rf allure-results allure-report && cypress run --env allure=true",
+   "test:login" : "rm -rf allure-results allure-report && cypress run --spec 'cypress/e2e/LoginTests.cy.ts' --env allure=true",
+   "test:index" : "rm -rf allure-results allure-report && cypress run --spec 'cypress/e2e/IndexTests.cy.ts' --env allure=true",
+   "report:allure": "allure generate allure-results --clean -o allure-report && allure open allure-report",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@shelex/cypress-allure-plugin": "^2.41.2",
+    "@types/node": "^24.5.2",
+    "@typescript-eslint/eslint-plugin": "^8.44.0",
+    "@typescript-eslint/parser": "^8.44.0",
+    "allure-commandline": "^2.34.1",
+    "cypress": "^15.2.0",
+    "eslint": "^9.36.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-cypress": "^5.1.1",
+    "eslint-plugin-prettier": "^5.5.4",
+    "prettier": "^3.6.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}
