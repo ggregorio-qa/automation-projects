@@ -23,7 +23,7 @@ jobs:
         run: npm ci
 
       - name: Run Cypress tests
-        run: npm run test:allure
+        run: npm run test:all
 
       - name: Generate Allure report
         run: npm run report:allure
