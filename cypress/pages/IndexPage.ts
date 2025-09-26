@@ -10,7 +10,7 @@ export class IndexPage extends BasePage{
         cardItem : 'div.inventory_item',
         itemName : '[data-test="inventory-item-name"]',
         addToCartButton : 'div.pricebar button',
-        itemPrice : '[data-test="inventory-item-price"]',
+        itemPrice : 'div.inventory_item_price',
         cartCounter : 'span.fa-layers-counter.shopping_cart_badge'
     };
     
@@ -52,6 +52,21 @@ export class IndexPage extends BasePage{
             return cy.get(this.locators.cardItem).eq(index);
         })
     }
+
+    getCardDetails(card : JQuery<HTMLElement>) : Cypress.Chainable<{title:string, description: string, price: string}> {
+        return cy.wrap(card).find('div.inventory_item_name').invoke('text').then(titleText => {
+            return cy.get('div.inventory_item_desc').invoke('text').then(descText => {
+                return cy.wrap(card).find(this.locators.itemPrice).invoke('text').then(priceText => {
+                    let modified = priceText.trim().replace(/[^0-9.]/g, '') //remove currency symbol
+                    return {
+                        title : titleText,
+                        description : descText,
+                        price : modified
+                    }
+                })
+            })
+        })
+    } 
 
     applyFilter(optionValue : string) : Cypress.Chainable<JQuery<HTMLElement>>  {
        return cy.get('select.product_sort_container').select(optionValue);
@@ -138,12 +153,19 @@ export class IndexPage extends BasePage{
     }
 
     addAllItemsToCart() {
-        cy.intercept('**/')
-        cy.get(this.locators.cardItem).find('button').then((buttons) => {
-            const filter = buttons.filter(($index, $el) => $el.innerText !== 'REMOVE');
-            cy.wrap(filter).each((button) => {
-                cy.wrap(button).click();
+        const items : {title:string, description: string, price:string}[] = [];
+       cy.get(this.locators.cardItem).then(cards => {
+            cy.wrap(cards).each(card => {
+                this.getCardDetails(card).then(data => {
+                    cy.wrap(card).find('button').should('contain.text', 'ADD TO CART').then((button) => {
+                        items.push(data);
+                        cy.wrap(button).click();
+                    })
+                })
             })
-        })
+       }).then(() => {
+            cy.log(`got items: ${items.length}`);
+            cy.wrap(items).as('cartItems');
+       })
     }
 } 

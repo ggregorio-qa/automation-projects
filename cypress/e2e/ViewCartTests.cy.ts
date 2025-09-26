@@ -27,30 +27,39 @@ describe('View Cart page validation' , () => {
     })
 
     it('should show the added to cart item', () => {
+        cy.get('@cartItems').then(cartItems => {
+            page.viewCartPage.getAllCurrentRecords();
+            cy.get('@currentItems').then(currentItems => {
+                //sort then compare
+                const sCartItems = [...cartItems].sort((a,b) => a.title.localeCompare(b.title));
+                const sCurrentItems = [...currentItems].sort((a,b) => a.title.localeCompare(b.title));
 
+                expect(sCurrentItems).to.deep.equal(sCartItems);
+            })
+        })
     })
 
-    it('should be able to view a cart image', () => {
+    // it('should be able to view a cart image', () => {
 
-    })
+    // })
 
-    it('should display correct number of records according to number of added to cart', () => {
+    // it('should display correct number of records according to number of added to cart', () => {
 
-    })
+    // })
 
-    it('should be able to remove a carted item from the list', () => {
+    // it('should be able to remove a carted item from the list', () => {
 
-    })
+    // })
 
-    it('should be able to navigate back to item selection', () => {
+    // it('should be able to navigate back to item selection', () => {
 
-    })
+    // })
 
-    it('should be able to proceed to checkout', () => {
+    // it('should be able to proceed to checkout', () => {
 
-    })
+    // })
 
-    it('should have the page menu be hidden', () => {
+    // it('should have the page menu be hidden', () => {
 
-    })
+    // })
 })
