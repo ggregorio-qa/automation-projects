@@ -99,4 +99,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Show GH Pages URL
-        run: echo "Mochawesome report available at: https://<username>.github.io/<repo-name>/report.html"
+        run: echo "Mochawesome report available at https://<username>.github.io/<repo-name>/report.html"
