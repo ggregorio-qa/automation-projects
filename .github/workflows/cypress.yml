@@ -27,4 +27,4 @@ jobs:
 
       - name: Generate Allure report
         run: npm run report:allure
-        if: always()
+        if: ${{ success() && !cancelled() }}
