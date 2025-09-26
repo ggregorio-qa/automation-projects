@@ -138,6 +138,7 @@ export class IndexPage extends BasePage{
     }
 
     addAllItemsToCart() {
+        cy.intercept('**/')
         cy.get(this.locators.cardItem).find('button').then((buttons) => {
             const filter = buttons.filter(($index, $el) => $el.innerText !== 'REMOVE');
             cy.wrap(filter).each((button) => {

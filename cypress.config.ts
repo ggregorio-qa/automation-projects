@@ -14,6 +14,7 @@ export default defineConfig({
   watchForFileChanges: false,
   screenshotOnRunFailure : true,
   video : false,
+  reporter: 'mochawesome',
   reporterOptions: {
     reportDir: "cypress/reports",
     overwrite: false,
